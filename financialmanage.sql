@@ -1,21 +1,37 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : MySQL
+ Source Server         : localhost_3306
  Source Server Type    : MySQL
  Source Server Version : 50717
  Source Host           : localhost:3306
- Source Schema         : financialmanage
+ Source Schema         : financial
 
  Target Server Type    : MySQL
  Target Server Version : 50717
  File Encoding         : 65001
 
- Date: 21/03/2021 17:55:02
+ Date: 25/03/2021 00:38:07
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for admin
+-- ----------------------------
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE `admin`  (
+  `aid` int(11) NOT NULL AUTO_INCREMENT,
+  `adminname` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NULL DEFAULT NULL,
+  PRIMARY KEY (`aid`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_bin ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of admin
+-- ----------------------------
+INSERT INTO `admin` VALUES (1, 'admin', 'admin');
 
 -- ----------------------------
 -- Table structure for budget
@@ -27,20 +43,29 @@ CREATE TABLE `budget`  (
   `wnum` int(11) NULL DEFAULT NULL COMMENT '预算金额',
   `user_id` int(11) NULL DEFAULT NULL COMMENT '所属用户',
   PRIMARY KEY (`wid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of budget
+-- ----------------------------
+INSERT INTO `budget` VALUES (1, '2021-03', 4000, 1);
 
 -- ----------------------------
 -- Table structure for memorandum
 -- ----------------------------
 DROP TABLE IF EXISTS `memorandum`;
 CREATE TABLE `memorandum`  (
-  `mid` int(11) NOT NULL,
+  `mid` int(11) NOT NULL AUTO_INCREMENT,
   `recordTime` datetime(0) NULL DEFAULT NULL COMMENT '记录时间',
   `thingPath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件路径',
   `topFont` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件内容前83个字',
   `user_id` int(11) NULL DEFAULT NULL COMMENT '所属用户',
   PRIMARY KEY (`mid`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of memorandum
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for news
@@ -55,18 +80,28 @@ CREATE TABLE `news`  (
   `recordTime` datetime(0) NULL DEFAULT NULL COMMENT '记录日期',
   `nContent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文章内容[文件路径]',
   PRIMARY KEY (`nid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of news
+-- ----------------------------
+INSERT INTO `news` VALUES (1, 'qqq', 'admin', '123', 0, '2021-03-24 00:00:00', 'd:/upload/news/15/5/79b96385-7e1a-470a-9c1a-059aefd51a56.txt');
 
 -- ----------------------------
 -- Table structure for shouzhi_category
 -- ----------------------------
 DROP TABLE IF EXISTS `shouzhi_category`;
 CREATE TABLE `shouzhi_category`  (
-  `szcid` int(11) NOT NULL COMMENT '收支类型编号',
+  `szcid` int(11) NOT NULL AUTO_INCREMENT COMMENT '收支类型编号',
   `parent_category` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收支类型（’收入’或者’支出’）',
   `son_category` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '收支子类型',
   PRIMARY KEY (`szcid`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of shouzhi_category
+-- ----------------------------
+INSERT INTO `shouzhi_category` VALUES (1, '收入', '额外收入');
 
 -- ----------------------------
 -- Table structure for shouzhi_record
@@ -80,7 +115,12 @@ CREATE TABLE `shouzhi_record`  (
   `shouzhi_category_id` int(11) NULL DEFAULT NULL COMMENT '收支类型对象',
   `user_id` int(11) NULL DEFAULT NULL COMMENT '用户编号',
   PRIMARY KEY (`szrid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of shouzhi_record
+-- ----------------------------
+INSERT INTO `shouzhi_record` VALUES (1, 1000, '2021-03-24 00:00:00', '闲鱼', 1, 1);
 
 -- ----------------------------
 -- Table structure for user
@@ -94,21 +134,31 @@ CREATE TABLE `user`  (
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `phone` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`uid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user
+-- ----------------------------
+INSERT INTO `user` VALUES (1, 'admin', 'ADMIN', '男', '534458392@qq.com', '13345622870');
 
 -- ----------------------------
 -- Table structure for wishlist
 -- ----------------------------
 DROP TABLE IF EXISTS `wishlist`;
 CREATE TABLE `wishlist`  (
-  `id` int(11) NOT NULL COMMENT '主键',
-  `wid` int(11) NULL DEFAULT NULL COMMENT '心愿编号',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `wid` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '心愿编号',
   `wish` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '心愿说明',
   `wnum` int(11) NULL DEFAULT NULL COMMENT '心愿目标金额',
   `wdate` datetime(0) NULL DEFAULT NULL COMMENT '心愿记录日期',
   `state` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '心愿完成状态',
   `user_id` int(11) NULL DEFAULT NULL COMMENT '所属用户',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of wishlist
+-- ----------------------------
+INSERT INTO `wishlist` VALUES (1, '心愿单2021-03-24-01', 'qq', 10000, '2021-03-24 00:00:00', '未完成', 1);
 
 SET FOREIGN_KEY_CHECKS = 1;

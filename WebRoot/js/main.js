@@ -237,18 +237,17 @@ $(document).ready(function(){
 	 //【2】添加按钮点击时
 	 //添加收入类型按钮  add_income_category_btn
 	 $("#add_income_category_btn").click(function(){
-		 var son=$("#add_income_category_input").val();
-		 alert("son:--"+son);
-		 if(son!=null&&son!=""){
+		 var son = $("#add_income_category_input").val();
+		 console.log("son:--" + son);
+		 if (son != null && son != "") {
 			 //提交表单数据
 			 $.post("/financialManage/shouzhiCategory/addShouzhiCategory.action", $("#add_income_category_form")
-						.serialize(), function(data) { //序列化数据为对象
-					//回调为ok时，弹出alert框，并重新刷新页面
-					alert("添加收入类型成功！");
-					window.location.reload();
-				});
-		 }
-		 else{
+				 .serialize(), function (data) { //序列化数据为对象
+				 //回调为ok时，弹出alert框，并重新刷新页面
+				 alert("添加收入类型成功！");
+				 window.location.reload();
+			 });
+		 } else {
 			 //对于提示信息的判断处理
 			 var txt=$("#add_income_category_msg").text();
 			 if(txt==null||txt==""){

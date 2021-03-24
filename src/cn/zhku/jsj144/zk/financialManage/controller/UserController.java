@@ -1,10 +1,7 @@
 package cn.zhku.jsj144.zk.financialManage.controller;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import cn.zhku.jsj144.zk.financialManage.pojo.User;
+import cn.zhku.jsj144.zk.financialManage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,10 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.zhku.jsj144.zk.financialManage.pojo.User;
-import cn.zhku.jsj144.zk.financialManage.service.ShouzhiCategoryService;
-import cn.zhku.jsj144.zk.financialManage.service.ShouzhiRecordService;
-import cn.zhku.jsj144.zk.financialManage.service.UserService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/user")   //访问路径是  /user/xxx
@@ -23,29 +18,26 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private ShouzhiCategoryService shouzhiCategoryService;
-	
 	//用户登录
 	@RequestMapping("login.action")
-	public String login(User user,HttpServletRequest request){
-		System.out.println("用户名和密码："+user.getUsername()+"::"+user.getPassword());
+	public String login(User user,HttpServletRequest request) {
+		System.out.println("用户名和密码：" + user.getUsername() + "::" + user.getPassword());
 		//获得用户名和密码，判断是否存在
-		User findUser=userService.queryUserByUser(user);
-		
-		if(findUser!=null){
-			System.out.println("查找的用户名和密码："+findUser.getUsername()+"::"+findUser.getPassword());
+		User findUser = userService.queryUserByUser(user);
+
+		if (findUser != null) {
+			System.out.println("查找的用户名和密码：" + findUser.getUsername() + "::" + findUser.getPassword());
 		}
-		System.out.println("");
+		System.out.println();
 		//1.存在，保存到session中  ； 然后   跳转到主页面
-		if(findUser!=null){
+		if (findUser != null) {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", findUser);
 //			System.out.println("id----------------------"+findUser.getUid());
-			
+
 			//通过父类型，从而查询出该父类型的所有子类型，从而进行显示
 			//List<String> son=shouzhiCategoryService.findSonCategoryByParent(parent_category);
-			
+
 			//查询账单明细
 			return "redirect:/shouzhiRecord/findShouzhiRecord.action";
 			
@@ -120,8 +112,6 @@ public class UserController {
 		request.setAttribute("user", user);
 		return "/jsp/userSetting.jsp";
 	}
-		
-		
 		
 	//用户信息设置
 	@RequestMapping("/editUser.action")
